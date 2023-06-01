@@ -34,4 +34,13 @@ describe('DemoComponent', () => {
     expect(component['status'] === 'working').toBeTruthy()
   })
 
+  it('interpolation test', () => {
+    let element: HTMLElement = fixture.debugElement.nativeElement.querySelector('h1')
+    expect(element.innerText).toEqual(component.count.toString())
+
+    component.count = 100
+    fixture.detectChanges()
+    expect(element.innerText).toEqual(component.count.toString())
+  })
+
 });
