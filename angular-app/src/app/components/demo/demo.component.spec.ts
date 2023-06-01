@@ -29,4 +29,9 @@ describe('DemoComponent', () => {
     fixture.detectChanges()
     expect(component.count).toEqual(parseInt(h1.nativeElement.innerText))
   })
+  it('call private method and variable ', () => {
+    component['printWorking']()
+    expect(component['status'] === 'working').toBeTruthy()
+  })
+
 });
