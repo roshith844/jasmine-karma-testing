@@ -43,4 +43,11 @@ describe('DemoComponent', () => {
     expect(element.innerText).toEqual(component.count.toString())
   })
 
+  it('ngClass Test', () => {
+    let element: HTMLElement = fixture.debugElement.nativeElement.querySelector('h1')
+    component.count = 5
+    fixture.detectChanges()
+    expect(element.getAttribute('class')).toContain('text-primary')
+  })
+
 });

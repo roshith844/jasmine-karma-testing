@@ -1,4 +1,4 @@
-<h1>{{count}}</h1>
+<h1 [ngClass]="count >= 0 ? 'text-primary': 'text-danger'">{{count}}</h1>
 
 <button id="increase" (click)="increaseNumber()">Increase</button>
 <button id="decrease" (click)="decreaseNumber()">Decrease</button>
