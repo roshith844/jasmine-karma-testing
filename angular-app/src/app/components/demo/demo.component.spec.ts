@@ -50,4 +50,13 @@ describe('DemoComponent', () => {
     expect(element.getAttribute('class')).toContain('text-primary')
   })
 
+  it('click event test', () => {
+    let element = fixture.debugElement.nativeElement.querySelector('#increase')
+    let h1 = fixture.debugElement.nativeElement.querySelector('h1')
+    let count = h1.innerText
+    element.click()
+    fixture.detectChanges()
+    expect(h1.innerText).toBe((Number(count) + 1).toString())
+  })
+
 });
