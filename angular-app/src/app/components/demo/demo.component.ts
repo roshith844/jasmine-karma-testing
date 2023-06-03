@@ -6,21 +6,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./demo.component.css']
 })
 export class DemoComponent {
-count = 0;
-private status = ''
- increaseNumber() {
+  count = 0;
+  private status = ''
+  increaseNumber() {
     this.count++
   }
 
   decreaseNumber() {
     this.count--
   }
-  private printWorking(){
+  private printWorking() {
     this.status = 'working'
   }
-// 
-studentName: string = ''
-setName(){
-  this.studentName = 'Roshith'
-}
+  // 
+  studentName: string = ''
+  setName() {
+    this.studentName = 'Roshith'
+  }
 }
