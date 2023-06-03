@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { DemoComponent } from './demo.component';
 import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 describe('DemoComponent', () => {
   let component: DemoComponent;
@@ -10,7 +11,8 @@ describe('DemoComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DemoComponent]
+      declarations: [DemoComponent],
+      imports: [FormsModule]
     });
     fixture = TestBed.createComponent(DemoComponent);
     component = fixture.componentInstance;
@@ -59,4 +61,36 @@ describe('DemoComponent', () => {
     expect(h1.innerText).toBe((Number(count) + 1).toString())
   })
 
+  it('set studentName from component ts', (done)=>{
+    component.studentName = 'example'
+    fixture.detectChanges()
+    fixture.whenStable().then(()=>{
+      const element: HTMLInputElement = fixture.debugElement.nativeElement.querySelector('#name')
+      expect(element.value).toEqual('example')
+      done()
+    })
+  })
+
+  it('set testbox value', (done)=>{
+    fixture.detectChanges()
+    fixture.whenStable().then(()=>{
+      const element: HTMLInputElement = fixture.debugElement.nativeElement.querySelector('#name')
+    element.value = 'updated'
+    element.dispatchEvent(new Event('input'))
+    fixture.detectChanges()
+    expect(element.value).toEqual(component.studentName)
+    done()
+    })
+  })
+  it("button Click test case", (done)=>{
+    fixture.detectChanges()
+    let element: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector('#button1')
+    fixture.whenStable().then(()=>{
+      element.click()
+      fixture.detectChanges()
+      expect(component.studentName).toBe('Roshith')
+      done()
+    })
+
+  })
 });

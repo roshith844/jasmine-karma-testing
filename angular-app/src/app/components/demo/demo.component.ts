@@ -18,5 +18,9 @@ private status = ''
   private printWorking(){
     this.status = 'working'
   }
-
+// 
+studentName: string = ''
+setName(){
+  this.studentName = 'Roshith'
+}
 }
