@@ -1,23 +1,37 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { DemoComponent } from './demo.component';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
+import { fakeAsync, async, tick } from '@angular/core/testing';
+import { DemoService } from '../../services/demo.service';
+class MockService extends DemoService {
+  public newSaveMethod() {
+    return true
+  }
+}
 describe('DemoComponent', () => {
   let component: DemoComponent;
   let fixture: ComponentFixture<DemoComponent>;
   let deb: DebugElement
+  let service: DemoService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [DemoComponent],
       imports: [FormsModule]
     });
+
+    TestBed.overrideComponent(
+      DemoComponent,
+      { set: { providers: [{ provide: DemoService, useClass: MockService }] } }
+    )
     fixture = TestBed.createComponent(DemoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     deb = fixture.debugElement
+    service = TestBed.inject(DemoService)
+
   });
 
   it('should create', () => {
@@ -91,6 +105,26 @@ describe('DemoComponent', () => {
       expect(component.studentName).toBe('Roshith')
       done()
     })
-
   })
+
+  it('set studentName from component ts using async method', fakeAsync(() => {
+    component.studentName = 'example'
+    fixture.detectChanges()
+    tick()
+    // fixture.whenStable().then(() => {
+    const element: HTMLInputElement = fixture.debugElement.nativeElement.querySelector('#name')
+    expect(element.value).toEqual('example')
+    // })
+  }))
+
+  it('dependency injection test using inject method', inject([DemoService], (injectedService: DemoService) => {
+    expect(injectedService).toBeTruthy()
+  })
+  )
+
+  it('dependency injection test using overriding', () => {
+    let element = fixture.debugElement.injector.get(DemoService)
+    expect(element instanceof (MockService)).toBeTruthy()
+  })
+
 });
